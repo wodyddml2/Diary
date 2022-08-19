@@ -1,8 +1,11 @@
 import UIKit
 
 import Kingfisher
+import JGProgressHUD
 
 class SelectViewController: BaseViewController {
+    let hud = JGProgressHUD()
+    
     let mainView = SelectView()
     
     var pageCount = 1
@@ -75,13 +78,17 @@ extension SelectViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if imageList.count - 1 == indexPath.item && pageCount < (totalPage ?? 2) {
+                hud.show(in: mainView)
+                
                 pageCount += 1
+                
                 RequestAPIManager.shared.requestSplash(page: pageCount, query: mainView.splashSearchBar.text ?? "snack") { list, total in
                     self.imageList.append(contentsOf: list)
                     self.totalPage = total
                     
                     DispatchQueue.main.async {
                         self.mainView.splashCollectionView.reloadData()
+                        self.hud.dismiss(animated: true)
                     }
                 }
             }
@@ -94,6 +101,8 @@ extension SelectViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text {
             
+            hud.show(in: mainView)
+            
             imageList.removeAll()
             
             RequestAPIManager.shared.requestSplash(page: pageCount, query: text) { list, total in
@@ -102,6 +111,7 @@ extension SelectViewController: UISearchBarDelegate {
                 
                 DispatchQueue.main.async {
                     self.mainView.splashCollectionView.reloadData()
+                    self.hud.dismiss(animated: true)
                 }
             }
     

@@ -3,7 +3,6 @@ import UIKit
 class SelectCollectionViewCell: BaseCollectionViewCell {
     let splashImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .blue
         return view
     }()
     

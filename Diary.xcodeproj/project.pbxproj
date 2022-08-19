@@ -27,6 +27,9 @@
 		6398DA2F28AFDE570090741F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6398DA2E28AFDE570090741F /* .gitignore */; };
 		6398DA3228AFDE870090741F /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3128AFDE870090741F /* APIKey.swift */; };
 		6398DA3428AFDEB50090741F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3328AFDEB50090741F /* APIManager.swift */; };
+		6398DA3628AFEEA70090741F /* SelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3528AFEEA70090741F /* SelectCollectionViewCell.swift */; };
+		6398DA3928AFEF250090741F /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3828AFEF250090741F /* ReusableProtocol.swift */; };
+		6398DA3B28AFF1F60090741F /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3A28AFF1F60090741F /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +51,9 @@
 		6398DA2E28AFDE570090741F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6398DA3128AFDE870090741F /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		6398DA3328AFDEB50090741F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		6398DA3528AFEEA70090741F /* SelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionViewCell.swift; sourceTree = "<group>"; };
+		6398DA3828AFEF250090741F /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		6398DA3A28AFF1F60090741F /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				6398DA3028AFDE740090741F /* Resources */,
+				6398DA3728AFEF120090741F /* Protocols */,
 				6398D9AD28AF8B2B0090741F /* AppDelegate.swift */,
 				6398D9AF28AF8B2B0090741F /* SceneDelegate.swift */,
 				6398D9B128AF8B2B0090741F /* ViewController.swift */,
@@ -106,6 +113,7 @@
 				6398DA2B28AFD7DE0090741F /* CustomView */,
 				6398DA1128AFD5450090741F /* BaseViewController.swift */,
 				6398DA1328AFD54B0090741F /* BaseView.swift */,
+				6398DA3A28AFF1F60090741F /* BaseCollectionViewCell.swift */,
 			);
 			path = Utilty;
 			sourceTree = "<group>";
@@ -124,6 +132,7 @@
 			children = (
 				6398DA2728AFD6480090741F /* SelectViewController.swift */,
 				6398DA2928AFD64F0090741F /* SelectView.swift */,
+				6398DA3528AFEEA70090741F /* SelectCollectionViewCell.swift */,
 			);
 			path = Select;
 			sourceTree = "<group>";
@@ -143,6 +152,14 @@
 				6398DA3328AFDEB50090741F /* APIManager.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		6398DA3728AFEF120090741F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				6398DA3828AFEF250090741F /* ReusableProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,17 +247,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				6398DA3428AFDEB50090741F /* APIManager.swift in Sources */,
+				6398DA3628AFEEA70090741F /* SelectCollectionViewCell.swift in Sources */,
 				6398D9B228AF8B2B0090741F /* ViewController.swift in Sources */,
 				6398DA2528AFD6330090741F /* MainView.swift in Sources */,
 				6398DA1228AFD5450090741F /* BaseViewController.swift in Sources */,
 				6398DA1428AFD54B0090741F /* BaseView.swift in Sources */,
 				6398DA2828AFD6480090741F /* SelectViewController.swift in Sources */,
 				6398DA2328AFD62D0090741F /* MainViewController.swift in Sources */,
+				6398DA3928AFEF250090741F /* ReusableProtocol.swift in Sources */,
 				6398DA3228AFDE870090741F /* APIKey.swift in Sources */,
 				6398DA2D28AFD8010090741F /* diaryTextField.swift in Sources */,
 				6398D9AE28AF8B2B0090741F /* AppDelegate.swift in Sources */,
 				6398D9B028AF8B2B0090741F /* SceneDelegate.swift in Sources */,
 				6398DA2A28AFD64F0090741F /* SelectView.swift in Sources */,
+				6398DA3B28AFF1F60090741F /* BaseCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,6 +34,7 @@ class MainView: BaseView {
         return view
     }()
     
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

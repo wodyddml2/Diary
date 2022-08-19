@@ -23,4 +23,15 @@ class SelectCollectionViewCell: BaseCollectionViewCell {
             make.top.bottom.leading.trailing.equalTo(self)
         }
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                self.splashImageView.alpha = 0.4
+            } else {
+                self.splashImageView.alpha = 1
+            }
+        }
+    }
+    
 }

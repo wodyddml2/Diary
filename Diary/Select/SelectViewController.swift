@@ -78,6 +78,7 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         postSplashImage = imageList[indexPath.item]
+        
     }
     
 }

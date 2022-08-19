@@ -27,6 +27,7 @@ class SelectViewController: BaseViewController {
         
         mainView.splashCollectionView.delegate = self
         mainView.splashCollectionView.dataSource = self
+        mainView.splashCollectionView.prefetchDataSource = self
         
         mainView.splashSearchBar.delegate = self
 
@@ -70,16 +71,42 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
 }
 
-extension SelectViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        RequestAPIManager.shared.requestSplash(page: pageCount, query: searchBar.text ?? "snack") { list, total in
-            self.imageList = list
-            self.totalPage = total
-            
-            DispatchQueue.main.async {
-                self.mainView.splashCollectionView.reloadData()
+extension SelectViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if imageList.count - 1 == indexPath.item && pageCount < (totalPage ?? 2) {
+                pageCount += 1
+                RequestAPIManager.shared.requestSplash(page: pageCount, query: mainView.splashSearchBar.text ?? "snack") { list, total in
+                    self.imageList.append(contentsOf: list)
+                    self.totalPage = total
+                    
+                    DispatchQueue.main.async {
+                        self.mainView.splashCollectionView.reloadData()
+                    }
+                }
             }
         }
+    }
+    
+}
+
+extension SelectViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            
+            imageList.removeAll()
+            
+            RequestAPIManager.shared.requestSplash(page: pageCount, query: text) { list, total in
+                self.imageList = list
+                self.totalPage = total
+                
+                DispatchQueue.main.async {
+                    self.mainView.splashCollectionView.reloadData()
+                }
+            }
+    
+        }
+
         mainView.endEditing(true)
     }
 }

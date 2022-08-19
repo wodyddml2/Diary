@@ -10,7 +10,7 @@ class RequestAPIManager {
     
     func requestSplash(page: Int, query: String, completionHandler: @escaping ([String], Int) -> ()) {
         
-        let url = "https://api.unsplash.com/search/photos?page=\(page)&query=\(query)&client_id=\(APIKey.splash)"
+        let url = "https://api.unsplash.com/search/photos?page=\(page)&per_page=30&query=\(query)&client_id=\(APIKey.splash)"
         
         AF.request(url, method: .get).validate(statusCode: 200...400).responseData(queue: .global()) { response in
             switch response.result {

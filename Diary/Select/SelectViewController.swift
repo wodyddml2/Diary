@@ -13,6 +13,8 @@ class SelectViewController: BaseViewController {
     var imageList: [String] = []
     var totalPage: Int?
     
+    var postSplashImage: String?
+    
     override func loadView() {
         self.view = mainView
     }
@@ -40,7 +42,9 @@ class SelectViewController: BaseViewController {
     }
     
     @objc func selectButtonClicked() {
+        NotificationCenter.default.post(name: .splashImage, object: nil, userInfo: ["image": postSplashImage ?? ""])
         
+        navigationController?.popViewController(animated: true)
     }
     
 
@@ -70,6 +74,10 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
         layout.minimumLineSpacing = 8
         
         return layout
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        postSplashImage = imageList[indexPath.item]
     }
     
 }

@@ -3,7 +3,8 @@ import UIKit
 class MainView: BaseView {
     let mainImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .blue
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 1
         return view
     }()
     
@@ -30,7 +31,11 @@ class MainView: BaseView {
         let view = UIButton()
         view.setTitle("Select", for: .normal)
         view.setTitleColor(UIColor.black, for: .normal)
-        view.backgroundColor = .brown
+        view.backgroundColor = .white
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 1
         return view
     }()
     

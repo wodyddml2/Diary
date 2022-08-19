@@ -1,7 +1,14 @@
 import UIKit
 
+import Kingfisher
+
 class SelectViewController: BaseViewController {
     let mainView = SelectView()
+    
+    var pageCount = 1
+    
+    var imageList: [String] = []
+    var totalPage: Int?
     
     override func loadView() {
         self.view = mainView
@@ -9,6 +16,7 @@ class SelectViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         
     }
@@ -19,6 +27,8 @@ class SelectViewController: BaseViewController {
         
         mainView.splashCollectionView.delegate = self
         mainView.splashCollectionView.dataSource = self
+        
+        mainView.splashSearchBar.delegate = self
 
         mainView.splashCollectionView.register(SelectCollectionViewCell.self, forCellWithReuseIdentifier: SelectCollectionViewCell.reusableIdentifier)
         
@@ -34,13 +44,15 @@ class SelectViewController: BaseViewController {
 
 extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return imageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectCollectionViewCell.reusableIdentifier, for: indexPath) as? SelectCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        cell.splashImageView.kf.setImage(with: URL(string: imageList[indexPath.item]))
         
         return cell
     }
@@ -56,4 +68,18 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return layout
     }
     
+}
+
+extension SelectViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        RequestAPIManager.shared.requestSplash(page: pageCount, query: searchBar.text ?? "snack") { list, total in
+            self.imageList = list
+            self.totalPage = total
+            
+            DispatchQueue.main.async {
+                self.mainView.splashCollectionView.reloadData()
+            }
+        }
+        mainView.endEditing(true)
+    }
 }

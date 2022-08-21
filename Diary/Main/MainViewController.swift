@@ -21,6 +21,9 @@ class MainViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(splashImageNotificationObserver(notification:)), name: .splashImage, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .splashImage, object: nil)
+    }
     
     @objc func splashImageNotificationObserver(notification: NSNotification) {
         if let image = notification.userInfo?["image"] as? String {

@@ -27,23 +27,8 @@ class MainView: BaseView {
         return view
     }()
     
-    let mainToSelectButton: UIButton = {
-        let view = UIButton()
-        view.setTitle("Select", for: .normal)
-        view.setTitleColor(UIColor.black, for: .normal)
-        view.backgroundColor = .white
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
-        view.layer.borderWidth = 1
-        return view
-    }()
     
-    let sampleButton: UIButton = {
-       let view = UIButton()
-        view.backgroundColor = .blue
-        return view
-    }()
+  
     
     // MARK: - Methods
     override init(frame: CGRect) {
@@ -55,7 +40,7 @@ class MainView: BaseView {
     }
     
     override func configureUI() {
-        [mainImageView, firstTextField, secondTextField, mainTextView, mainToSelectButton, sampleButton].forEach {
+        [mainImageView, firstTextField, secondTextField, mainTextView].forEach {
             self.addSubview($0)
         }
     }
@@ -89,14 +74,7 @@ class MainView: BaseView {
             make.centerX.equalTo(self)
         }
         
-        mainToSelectButton.snp.makeConstraints { make in
-            make.bottom.trailing.equalTo(mainImageView).offset(-8)
-        }
-        
-        sampleButton.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.trailing.top.equalTo(self.safeAreaLayoutGuide)
-        }
+    
     }
 
 }

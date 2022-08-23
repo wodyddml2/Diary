@@ -77,7 +77,7 @@ class HomeViewController: BaseViewController {
     // 14 이후
     func sortedMenuAction() -> UIMenu {
         let title = UIAction(title: "제목순", image: UIImage(systemName: "character")) { _ in
-            self.fetchRealm()
+            self.tasks = self.localRealm.objects(UserDairy.self).sorted(byKeyPath: "diaryTitle", ascending: true)
         }
         let date = UIAction(title: "날짜순", image: UIImage(systemName: "calendar")) { _ in
             self.tasks = self.localRealm.objects(UserDairy.self).sorted(byKeyPath: "diaryRegisterDate", ascending: true)
@@ -91,7 +91,7 @@ class HomeViewController: BaseViewController {
         let alert = UIAlertController(title: "목록 정렬", message: nil, preferredStyle: .actionSheet)
         
         let title = UIAlertAction(title: "제목순", style: .default) { _ in
-            self.fetchRealm()
+            self.tasks = self.localRealm.objects(UserDairy.self).sorted(byKeyPath: "diaryTitle", ascending: true)
         }
         let date = UIAlertAction(title: "날짜순", style: .default) { _ in
             self.tasks = self.localRealm.objects(UserDairy.self).sorted(byKeyPath: "diaryRegisterDate", ascending: true)
@@ -106,6 +106,7 @@ class HomeViewController: BaseViewController {
     
     
     func fetchRealm() {
+        // realm filter query, NSPredicate
         // 3. Realm 데이터를 배열에 담기
         // sorted같은 쿼리들이 많다.
        tasks = localRealm.objects(UserDairy.self)
@@ -114,17 +115,6 @@ class HomeViewController: BaseViewController {
     @objc func plusButtonClicked() {
         let vc = MainViewController()
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    // UIMenu 해보기
-    @objc func sortButtonClicked() {
-        // 생성순
-        tasks = localRealm.objects(UserDairy.self)//.sorted(byKeyPath: "diaryWriteDate", ascending: true)
-       
-    }
-    // realm filter query, NSPredicate
-    @objc func filterButtonClicked() {
-        tasks = localRealm.objects(UserDairy.self).filter("diaryTitle CONTAINS '일기'")
     }
     
     

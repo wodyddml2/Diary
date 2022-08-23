@@ -8,7 +8,7 @@ import RealmSwift
 class UserDairy: Object {
     @Persisted var diaryTitle: String // 제목(필수)
     @Persisted var diaryContent: String?
-    @Persisted var diaryWriteDate = Date()
+    @Persisted var diaryWriteDate: String?
     @Persisted var diaryRegisterDate = Date()
     @Persisted var diaryFavorite: Bool
     @Persisted var diaryImage: String?
@@ -16,7 +16,7 @@ class UserDairy: Object {
     // PK: Int, UUID, ObjectID
     @Persisted(primaryKey: true) var objectId: ObjectId
 
-    convenience init(diaryTitle: String, diaryContent: String?, diaryWriteDate: Date, diaryRegisterDate: Date, diaryImage: String?) {
+    convenience init(diaryTitle: String, diaryContent: String?, diaryWriteDate: String, diaryRegisterDate: Date, diaryImage: String?) {
             self.init()
             self.diaryTitle = diaryTitle
         self.diaryContent = diaryContent

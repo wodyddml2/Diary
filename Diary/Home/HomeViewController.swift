@@ -4,7 +4,16 @@ import RealmSwift // 1
 
 class HomeViewController: BaseViewController {
 
-    let localRealm = try! Realm() // 2
+    let config = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
+        if oldSchemaVersion < 1 {
+            migration.enumerateObjects(ofType: UserDairy.className()) { oldObject, newObject in
+                
+                newObject!["diaryWriteDate"] = "\(oldObject!["diaryWriteDate"] ?? Date())"
+            }
+        }
+    }
+ 
+    lazy var localRealm = try! Realm(configuration: config)
     
     // lazy로 즉시 실행 클로저를 지연시켜 초기화 시점에 메모리를 올려 self를 사용할 수 있게 한다.
     lazy var tableView: UITableView = {
@@ -40,6 +49,7 @@ class HomeViewController: BaseViewController {
         
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "Diary"
+        navigationItem.backButtonTitle = " "
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
         

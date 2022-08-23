@@ -45,27 +45,46 @@ class MainViewController: BaseViewController {
     override func configureUI() {
         navigationItem.title = "Diary"
         navigationItem.backButtonTitle = " "
-//        folder.badge.plus
 //        photo
         let saveButton = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(saveButtonClicked))
+
+        navigationItem.rightBarButtonItems = [saveButton]
         
         mainView.mainToSelectButton.addTarget(self, action: #selector(mainToSelectButtonClicked), for: .touchUpInside)
-//        mainView.sampleButton.addTarget(self, action: #selector(sample), for: .touchUpInside)
        
     }
     // Realm
     @objc func saveButtonClicked() {
         
-        let task = UserDairy(diaryTitle: mainView.firstTextField.text ?? "" , diaryContent: mainView.mainTextView.text, diaryWriteDate: mainView.secondTextField.text ?? "", diaryRegisterDate: Date(), diaryImage: nil)
-        // => Record 추가
-        
-        try! localRealm.write {
-            localRealm.add(task) // create
-            print("Realm")
-            navigationController?.popViewController(animated: true)
+        if mainView.firstTextField.text?.isEmpty == true {
+            let alert = UIAlertController(title: "최소한 제목을 입력해주세요!!", message: nil, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(ok)
+            present(alert, animated: true)
             
+        } else {
+            let alert = UIAlertController(title: "내용을 저장하시겠습니까?", message: nil, preferredStyle: .alert)
+            
+            let ok = UIAlertAction(title: "저장", style: .default) { _ in
+                let task = UserDairy(diaryTitle: self.mainView.firstTextField.text ?? "" , diaryContent: self.mainView.mainTextView.text, diaryWriteDate: self.mainView.secondTextField.text ?? "", diaryRegisterDate: Date(), diaryImage: nil)
+                // => Record 추가
+                
+                try! self.localRealm.write {
+                    self.localRealm.add(task) // create
+                    print("Realm")
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            let cancle = UIAlertAction(title: "취소", style: .cancel)
+            
+            [ok, cancle].forEach {
+                alert.addAction($0)
+            }
+            present(alert, animated: true)
         }
+        
     }
+    
     
     @objc func mainToSelectButtonClicked() {
         let vc = SelectViewController()

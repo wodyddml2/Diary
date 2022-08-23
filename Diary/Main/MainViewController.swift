@@ -47,8 +47,11 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        print("Realm is located at:", localRealm.configuration.fileURL!)
-        NotificationCenter.default.addObserver(self, selector: #selector(splashImageNotificationObserver(notification:)), name: .splashImage, object: nil)
+        mainView.mainTextView.delegate = self
+        mainView.firstTextField.delegate = self
+        mainView.secondTextField.delegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(splashImageNotificationObserver(notification:)), name: .splashImage, object: nil)
     }
     
     deinit {
@@ -60,6 +63,13 @@ class MainViewController: BaseViewController {
             self.mainView.mainImageView.kf.setImage(with: URL(string: image))
         }
     }
+    
+    
+    
+    
+    
+    
+    
     
     override func configureUI() {
         navigationItem.title = "Diary"
@@ -77,6 +87,9 @@ class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItems = [saveButton, imageButton]
        
     }
+    
+   
+    
     // MARK: 일기 저장 Button Action
     @objc func saveButtonClicked() {
         
@@ -189,4 +202,20 @@ extension MainViewController: PHPickerViewControllerDelegate {
         }
     }
 
+}
+
+extension MainViewController: UITextViewDelegate, UITextFieldDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        setKeyboardObserver()
+        return true
+    }
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        removeKeyboardObserver()
+        return true
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        mainView.endEditing(true)
+        return true
+    }
 }

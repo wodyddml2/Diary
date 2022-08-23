@@ -27,9 +27,7 @@ class MainView: BaseView {
         return view
     }()
     
-    
   
-    
     // MARK: - Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,8 +36,12 @@ class MainView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    @objc func viewTapGesture() {
+        self.endEditing(true)
+    }
     override func configureUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
+        self.addGestureRecognizer(tapGesture)
         [mainImageView, firstTextField, secondTextField, mainTextView].forEach {
             self.addSubview($0)
         }

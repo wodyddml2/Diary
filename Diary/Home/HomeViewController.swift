@@ -31,7 +31,6 @@ class HomeViewController: BaseViewController {
             // 화면 갱신은 화면 전환 코드 및 생명 주기 실행 점검 필요!
             // present, overCurrentContext, overFullScreen > viewWillAppear X
             tableView.reloadData()
-            print("Tasks Changed")
         }
     }
     

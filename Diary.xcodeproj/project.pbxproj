@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6322FA6E28B3163C00106E41 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 6322FA6D28B3163C00106E41 /* Realm */; };
+		6322FA7028B3163C00106E41 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6322FA6F28B3163C00106E41 /* RealmSwift */; };
+		6322FA7328B319E200106E41 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322FA7228B319E200106E41 /* RealmModel.swift */; };
+		6322FA7628B32A9F00106E41 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322FA7528B32A9F00106E41 /* HomeViewController.swift */; };
 		6398D9AE28AF8B2B0090741F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398D9AD28AF8B2B0090741F /* AppDelegate.swift */; };
 		6398D9B028AF8B2B0090741F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398D9AF28AF8B2B0090741F /* SceneDelegate.swift */; };
 		6398D9B228AF8B2B0090741F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398D9B128AF8B2B0090741F /* ViewController.swift */; };
@@ -17,7 +21,6 @@
 		6398DA1428AFD54B0090741F /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA1328AFD54B0090741F /* BaseView.swift */; };
 		6398DA1728AFD5650090741F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6398DA1628AFD5650090741F /* SnapKit */; };
 		6398DA1A28AFD5710090741F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6398DA1928AFD5710090741F /* Alamofire */; };
-		6398DA1D28AFD57B0090741F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6398DA1C28AFD57B0090741F /* SwiftyJSON */; };
 		6398DA2028AFD5850090741F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6398DA1F28AFD5850090741F /* Kingfisher */; };
 		6398DA2328AFD62D0090741F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA2228AFD62D0090741F /* MainViewController.swift */; };
 		6398DA2528AFD6330090741F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA2428AFD6330090741F /* MainView.swift */; };
@@ -30,10 +33,14 @@
 		6398DA3628AFEEA70090741F /* SelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3528AFEEA70090741F /* SelectCollectionViewCell.swift */; };
 		6398DA3928AFEF250090741F /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3828AFEF250090741F /* ReusableProtocol.swift */; };
 		6398DA3B28AFF1F60090741F /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6398DA3A28AFF1F60090741F /* BaseCollectionViewCell.swift */; };
-		6398DA3F28B007D90090741F /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 6398DA3E28B007D90090741F /* JGProgressHUD */; };
+		63E6031628B4DE8A001E73F5 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 63E6031528B4DE8A001E73F5 /* JGProgressHUD */; };
+		63E6031928B4DE95001E73F5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 63E6031828B4DE95001E73F5 /* SwiftyJSON */; };
+		63E6031B28B4E244001E73F5 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E6031A28B4E243001E73F5 /* Version.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6322FA7228B319E200106E41 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		6322FA7528B32A9F00106E41 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6398D9AA28AF8B2B0090741F /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6398D9AD28AF8B2B0090741F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6398D9AF28AF8B2B0090741F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +62,7 @@
 		6398DA3528AFEEA70090741F /* SelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionViewCell.swift; sourceTree = "<group>"; };
 		6398DA3828AFEF250090741F /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		6398DA3A28AFF1F60090741F /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		63E6031A28B4E243001E73F5 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,17 +70,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6322FA6E28B3163C00106E41 /* Realm in Frameworks */,
+				63E6031928B4DE95001E73F5 /* SwiftyJSON in Frameworks */,
 				6398DA2028AFD5850090741F /* Kingfisher in Frameworks */,
-				6398DA1D28AFD57B0090741F /* SwiftyJSON in Frameworks */,
+				6322FA7028B3163C00106E41 /* RealmSwift in Frameworks */,
 				6398DA1728AFD5650090741F /* SnapKit in Frameworks */,
+				63E6031628B4DE8A001E73F5 /* JGProgressHUD in Frameworks */,
 				6398DA1A28AFD5710090741F /* Alamofire in Frameworks */,
-				6398DA3F28B007D90090741F /* JGProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6322FA7128B319CB00106E41 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				6322FA7228B319E200106E41 /* RealmModel.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		6322FA7428B32A8A00106E41 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6322FA7528B32A9F00106E41 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		6398D9A128AF8B2B0090741F = {
 			isa = PBXGroup;
 			children = (
@@ -95,12 +121,14 @@
 			children = (
 				6398DA3028AFDE740090741F /* Resources */,
 				6398DA3728AFEF120090741F /* Protocols */,
+				6322FA7128B319CB00106E41 /* Realm */,
+				6398DA1028AFD5360090741F /* Utilty */,
+				6322FA7428B32A8A00106E41 /* Home */,
+				6398DA2128AFD60A0090741F /* Main */,
+				6398DA2628AFD63B0090741F /* Select */,
 				6398D9AD28AF8B2B0090741F /* AppDelegate.swift */,
 				6398D9AF28AF8B2B0090741F /* SceneDelegate.swift */,
 				6398D9B128AF8B2B0090741F /* ViewController.swift */,
-				6398DA2128AFD60A0090741F /* Main */,
-				6398DA2628AFD63B0090741F /* Select */,
-				6398DA1028AFD5360090741F /* Utilty */,
 				6398D9B328AF8B2B0090741F /* Main.storyboard */,
 				6398D9B628AF8B2D0090741F /* Assets.xcassets */,
 				6398D9B828AF8B2D0090741F /* LaunchScreen.storyboard */,
@@ -152,6 +180,7 @@
 			children = (
 				6398DA3128AFDE870090741F /* APIKey.swift */,
 				6398DA3328AFDEB50090741F /* APIManager.swift */,
+				63E6031A28B4E243001E73F5 /* Version.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -183,9 +212,11 @@
 			packageProductDependencies = (
 				6398DA1628AFD5650090741F /* SnapKit */,
 				6398DA1928AFD5710090741F /* Alamofire */,
-				6398DA1C28AFD57B0090741F /* SwiftyJSON */,
 				6398DA1F28AFD5850090741F /* Kingfisher */,
-				6398DA3E28B007D90090741F /* JGProgressHUD */,
+				6322FA6D28B3163C00106E41 /* Realm */,
+				6322FA6F28B3163C00106E41 /* RealmSwift */,
+				63E6031528B4DE8A001E73F5 /* JGProgressHUD */,
+				63E6031828B4DE95001E73F5 /* SwiftyJSON */,
 			);
 			productName = Diary;
 			productReference = 6398D9AA28AF8B2B0090741F /* Diary.app */;
@@ -218,9 +249,10 @@
 			packageReferences = (
 				6398DA1528AFD5650090741F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6398DA1828AFD5710090741F /* XCRemoteSwiftPackageReference "Alamofire" */,
-				6398DA1B28AFD57B0090741F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6398DA1E28AFD5850090741F /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				6398DA3D28B007D90090741F /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+				6322FA6C28B3163C00106E41 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				63E6031428B4DE8A001E73F5 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+				63E6031728B4DE95001E73F5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = 6398D9AB28AF8B2B0090741F /* Products */;
 			projectDirPath = "";
@@ -253,16 +285,19 @@
 				6398DA3428AFDEB50090741F /* APIManager.swift in Sources */,
 				6398DA3628AFEEA70090741F /* SelectCollectionViewCell.swift in Sources */,
 				6398D9B228AF8B2B0090741F /* ViewController.swift in Sources */,
+				6322FA7628B32A9F00106E41 /* HomeViewController.swift in Sources */,
 				6398DA2528AFD6330090741F /* MainView.swift in Sources */,
 				6398DA1228AFD5450090741F /* BaseViewController.swift in Sources */,
 				6398DA1428AFD54B0090741F /* BaseView.swift in Sources */,
 				6398DA2828AFD6480090741F /* SelectViewController.swift in Sources */,
 				6398DA2328AFD62D0090741F /* MainViewController.swift in Sources */,
 				6398DA3928AFEF250090741F /* ReusableProtocol.swift in Sources */,
+				63E6031B28B4E244001E73F5 /* Version.swift in Sources */,
 				6398DA3228AFDE870090741F /* APIKey.swift in Sources */,
 				6398DA2D28AFD8010090741F /* diaryTextField.swift in Sources */,
 				6398D9AE28AF8B2B0090741F /* AppDelegate.swift in Sources */,
 				6398D9B028AF8B2B0090741F /* SceneDelegate.swift in Sources */,
+				6322FA7328B319E200106E41 /* RealmModel.swift in Sources */,
 				6398DA2A28AFD64F0090741F /* SelectView.swift in Sources */,
 				6398DA3B28AFF1F60090741F /* BaseCollectionViewCell.swift in Sources */,
 			);
@@ -486,6 +521,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6322FA6C28B3163C00106E41 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		6398DA1528AFD5650090741F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -502,14 +545,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		6398DA1B28AFD57B0090741F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		6398DA1E28AFD5850090741F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -518,7 +553,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6398DA3D28B007D90090741F /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+		63E6031428B4DE8A001E73F5 /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
 			requirement = {
@@ -526,9 +561,27 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		63E6031728B4DE95001E73F5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6322FA6D28B3163C00106E41 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6322FA6C28B3163C00106E41 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		6322FA6F28B3163C00106E41 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6322FA6C28B3163C00106E41 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		6398DA1628AFD5650090741F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6398DA1528AFD5650090741F /* XCRemoteSwiftPackageReference "SnapKit" */;
@@ -539,20 +592,20 @@
 			package = 6398DA1828AFD5710090741F /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		6398DA1C28AFD57B0090741F /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6398DA1B28AFD57B0090741F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
 		6398DA1F28AFD5850090741F /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6398DA1E28AFD5850090741F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		6398DA3E28B007D90090741F /* JGProgressHUD */ = {
+		63E6031528B4DE8A001E73F5 /* JGProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6398DA3D28B007D90090741F /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			package = 63E6031428B4DE8A001E73F5 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
 			productName = JGProgressHUD;
+		};
+		63E6031828B4DE95001E73F5 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63E6031728B4DE95001E73F5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

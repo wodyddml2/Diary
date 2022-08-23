@@ -39,7 +39,13 @@ class MainView: BaseView {
         return view
     }()
     
- 
+    let sampleButton: UIButton = {
+       let view = UIButton()
+        view.backgroundColor = .blue
+        return view
+    }()
+    
+    // MARK: - Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -49,7 +55,7 @@ class MainView: BaseView {
     }
     
     override func configureUI() {
-        [mainImageView, firstTextField, secondTextField, mainTextView, mainToSelectButton].forEach {
+        [mainImageView, firstTextField, secondTextField, mainTextView, mainToSelectButton, sampleButton].forEach {
             self.addSubview($0)
         }
     }
@@ -85,6 +91,11 @@ class MainView: BaseView {
         
         mainToSelectButton.snp.makeConstraints { make in
             make.bottom.trailing.equalTo(mainImageView).offset(-8)
+        }
+        
+        sampleButton.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.trailing.top.equalTo(self.safeAreaLayoutGuide)
         }
     }
 

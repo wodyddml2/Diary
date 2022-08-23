@@ -210,6 +210,11 @@ extension MainViewController: PHPickerViewControllerDelegate {
 extension MainViewController: UITextViewDelegate, UITextFieldDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         setKeyboardObserver()
+        navigationController?.navigationBar.isHidden = true
+        return true
+    }
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        navigationController?.navigationBar.isHidden = false
         return true
     }
 

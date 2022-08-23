@@ -66,7 +66,10 @@ class MainViewController: BaseViewController {
     
     
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mainView.endEditing(true)
+    }
     
     
     

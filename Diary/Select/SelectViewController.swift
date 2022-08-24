@@ -18,7 +18,7 @@ class SelectViewController: BaseViewController {
     var imageList: [String] = []
     var totalPage: Int?
     
-    var postSplashImage: String?
+//    var postSplashImage: String?
     
     override func loadView() {
         self.view = mainView
@@ -74,7 +74,7 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
         
-        cell.layer.borderColor = selectIndexPath == indexPath ? UIColor.black.cgColor : nil
+        cell.layer.borderColor = selectIndexPath == indexPath ? UIColor.red.cgColor : nil
         cell.layer.borderWidth = selectIndexPath == indexPath ? 4 : 0
         cell.splashImageView.kf.setImage(with: URL(string: imageList[indexPath.item]))
         
@@ -93,8 +93,8 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        postSplashImage = imageList[indexPath.item]
-        
+//        postSplashImage = imageList[indexPath.item]
+        print(#function)
         guard let cell = collectionView.cellForItem(at: indexPath) as? SelectCollectionViewCell else {return}
         
         selectImage = cell.splashImageView.image
@@ -108,7 +108,7 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
         print(#function)
         selectIndexPath = nil
         selectImage = nil
-        collectionView.reloadData()
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		630C4AB428B633AB0002E88F /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C4AB328B633AB0002E88F /* BaseTableViewCell.swift */; };
+		630C4AB628B635740002E88F /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C4AB528B635740002E88F /* HomeTableViewCell.swift */; };
 		6322FA6E28B3163C00106E41 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 6322FA6D28B3163C00106E41 /* Realm */; };
 		6322FA7028B3163C00106E41 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6322FA6F28B3163C00106E41 /* RealmSwift */; };
 		6322FA7328B319E200106E41 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322FA7228B319E200106E41 /* RealmModel.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		630C4AB328B633AB0002E88F /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		630C4AB528B635740002E88F /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		6322FA7228B319E200106E41 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		6322FA7528B32A9F00106E41 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6361D37628B5D2720051F628 /* FileManager + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager + Extension.swift"; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				6322FA7528B32A9F00106E41 /* HomeViewController.swift */,
+				630C4AB528B635740002E88F /* HomeTableViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				6398DA1428AFD54B0090741F /* BaseView.swift in Sources */,
 				6398DA2828AFD6480090741F /* SelectViewController.swift in Sources */,
 				630C4AB428B633AB0002E88F /* BaseTableViewCell.swift in Sources */,
+				630C4AB628B635740002E88F /* HomeTableViewCell.swift in Sources */,
 				6398DA2328AFD62D0090741F /* MainViewController.swift in Sources */,
 				6398DA3928AFEF250090741F /* ReusableProtocol.swift in Sources */,
 				63E6031B28B4E244001E73F5 /* UIViewController+Extension.swift in Sources */,

@@ -21,7 +21,7 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .gray
         view.delegate = self
         view.dataSource = self
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reusableIdentifier)
         // 메타타입으로 UITableViewCell.self는 그 객체의 모든 것을 담는다.
         return view
     }()
@@ -45,7 +45,7 @@ class HomeViewController: BaseViewController {
         view.addSubview(tableView)
         
         tableView.backgroundColor  = .white
-        
+        tableView.rowHeight = 100
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "Diary"
         navigationItem.backButtonTitle = " "
@@ -126,10 +126,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reusableIdentifier) as? HomeTableViewCell else {
+            return UITableViewCell()
+        }
         
-//        loadImageFromDocument(fileName: "\(tasks[indexPath.row].objectId).jpg")
-        cell.textLabel?.text = tasks[indexPath.row].diaryTitle
+        cell.diaryImageView.image = loadImageFromDocument(fileName: "\(tasks[indexPath.row].objectId).jpg")
+        cell.diaryTitleLabel.text = tasks[indexPath.row].diaryTitle
+        cell.diaryDateLabel.text = tasks[indexPath.row].diaryWriteDate
         return cell
     }
     // 한 번에 삭제나 cell위치 바꾸는 그런 기능은 editing mode에 있음
@@ -163,6 +166,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, view, completionHandler in
+            self.removeImageFromDocument(fileName: "\(self.tasks[indexPath.row].objectId).jpg")
+            
             try! self.localRealm.write {
                 self.localRealm.delete(self.tasks[indexPath.row])
             }

@@ -8,6 +8,10 @@ extension Notification.Name {
     static let splashImage = NSNotification.Name("splashImageNotification")
 }
 
+protocol SelectImageDelegate {
+    func sendImageData(image:UIImage)
+}
+
 class MainViewController: BaseViewController {
     var mainView = MainView()
     
@@ -46,25 +50,22 @@ class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print("Realm is located at:", localRealm.configuration.fileURL!)
         mainView.mainTextView.delegate = self
         mainView.firstTextField.delegate = self
         mainView.secondTextField.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(splashImageNotificationObserver(notification:)), name: .splashImage, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(splashImageNotificationObserver(notification:)), name: .splashImage, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .splashImage, object: nil)
-    }
-    
-    @objc func splashImageNotificationObserver(notification: NSNotification) {
-        if let image = notification.userInfo?["image"] as? String {
-            self.mainView.mainImageView.kf.setImage(with: URL(string: image))
-        }
-    }
-    
-    
+//    deinit {
+//        NotificationCenter.default.removeObserver(self, name: .splashImage, object: nil)
+//    }
+//
+//    @objc func splashImageNotificationObserver(notification: NSNotification) {
+//        if let image = notification.userInfo?["image"] as? String {
+//            self.mainView.mainImageView.kf.setImage(with: URL(string: image))
+//        }
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -77,6 +78,9 @@ class MainViewController: BaseViewController {
     override func configureUI() {
         navigationItem.title = "Diary"
         navigationItem.backButtonTitle = " "
+        navigationController?.navigationBar.tintColor = .black
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(backButtonClicked))
 
         let saveButton = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(saveButtonClicked))
         
@@ -90,10 +94,13 @@ class MainViewController: BaseViewController {
         navigationItem.rightBarButtonItems = [saveButton, imageButton]
        
     }
-    
+    @objc func backButtonClicked() {
+        dismiss(animated: true)
+    }
    
     
     // MARK: 일기 저장 Button Action
+    // Realm + 이미지 sandBox의 도큐먼트에 저장
     @objc func saveButtonClicked() {
         
         if mainView.firstTextField.text?.isEmpty == true {
@@ -109,11 +116,17 @@ class MainViewController: BaseViewController {
                 let task = UserDairy(diaryTitle: self.mainView.firstTextField.text ?? "" , diaryContent: self.mainView.mainTextView.text, diaryWriteDate: self.mainView.secondTextField.text ?? "", diaryRegisterDate: Date(), diaryImage: nil)
                 // => Record 추가
                 
-                try! self.localRealm.write {
-                    self.localRealm.add(task) // create
-                    print("Realm")
-                    self.navigationController?.popViewController(animated: true)
+                do {
+                    try! self.localRealm.write {
+                        self.localRealm.add(task) // create
+                    }
+                } catch let error {
+                    print(error)
                 }
+                if let image = self.mainView.mainImageView.image {
+                    self.saveImageToDocument(fileName: "\(task.objectId).jpg", image: image)
+                }
+                self.dismiss(animated: true)
             }
             let cancle = UIAlertAction(title: "취소", style: .cancel)
             
@@ -124,13 +137,15 @@ class MainViewController: BaseViewController {
         }
     }
     
+   
     // MARK: 이미지 불러오기 위한 Action
     // 14 이후
     func menuImageButtonClicked() -> UIMenu {
         let search = UIAction(title: "UnSplash", image: UIImage(systemName: "magnifyingglass")) { _ in
             let vc = SelectViewController()
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.delegate = self
+            self.transition(vc, transitionStyle: .push)
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
         let camera = UIAction(title: "카메라", image: UIImage(systemName: "camera")) { _ in
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -153,8 +168,9 @@ class MainViewController: BaseViewController {
         
         let search = UIAlertAction(title: "UnSplash", style: .default) { _ in
             let vc = SelectViewController()
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+            // 같은 프로토콜을 가지고 있다면 self처리가능
+            vc.delegate = self
+            self.transition(vc, transitionStyle: .push)
         }
         let camera = UIAlertAction(title: "카메라", style: .default) { _ in
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -226,4 +242,12 @@ extension MainViewController: UITextViewDelegate, UITextFieldDelegate {
         mainView.endEditing(true)
         return true
     }
+}
+
+extension MainViewController: SelectImageDelegate {
+    func sendImageData(image: UIImage) {
+        mainView.mainImageView.image = image
+        print(#function)
+    }
+    
 }

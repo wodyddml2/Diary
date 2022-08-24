@@ -6,6 +6,11 @@ import JGProgressHUD
 class SelectViewController: BaseViewController {
     let hud = JGProgressHUD()
     
+    var delegate: SelectImageDelegate?
+    var selectImage: UIImage? // 1.
+    var selectIndexPath: IndexPath?
+    
+    
     let mainView = SelectView()
     
     var pageCount = 1
@@ -39,11 +44,20 @@ class SelectViewController: BaseViewController {
         mainView.splashCollectionView.register(SelectCollectionViewCell.self, forCellWithReuseIdentifier: SelectCollectionViewCell.reusableIdentifier)
         
         mainView.splashCollectionView.collectionViewLayout = collectionViewLayout()
+        
+        // 서버 통신이 끝나기전에 뒤로가기나 그런 것들을 못하게 후에 true로 또는 지금 쓰는 것처럼 로딩
+//        view.isUserInteractionEnabled = false
+        
     }
     
     @objc func selectButtonClicked() {
-        NotificationCenter.default.post(name: .splashImage, object: nil, userInfo: ["image": postSplashImage ?? ""])
-        
+//        NotificationCenter.default.post(name: .splashImage, object: nil, userInfo: ["image": postSplashImage ?? ""])
+        guard let selectImage = selectImage else {
+            // Alert 띄우기
+            return
+        }
+
+        delegate?.sendImageData(image: selectImage)
         navigationController?.popViewController(animated: true)
     }
     
@@ -60,6 +74,8 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
         
+        cell.layer.borderColor = selectIndexPath == indexPath ? UIColor.black.cgColor : nil
+        cell.layer.borderWidth = selectIndexPath == indexPath ? 4 : 0
         cell.splashImageView.kf.setImage(with: URL(string: imageList[indexPath.item]))
         
         return cell
@@ -79,6 +95,20 @@ extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         postSplashImage = imageList[indexPath.item]
         
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SelectCollectionViewCell else {return}
+        
+        selectImage = cell.splashImageView.image
+        
+        selectIndexPath = indexPath
+        collectionView.reloadData()
+    }
+    
+    // 해결해야함
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        print(#function)
+        selectIndexPath = nil
+        selectImage = nil
+        collectionView.reloadData()
     }
     
 }

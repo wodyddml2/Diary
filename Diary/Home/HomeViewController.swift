@@ -113,10 +113,10 @@ class HomeViewController: BaseViewController {
     
     @objc func plusButtonClicked() {
         let vc = MainViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        transition(vc, transitionStyle: .presentFullNavigation)
     }
     
-    
+  
 
 }
 
@@ -128,6 +128,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         
+//        loadImageFromDocument(fileName: "\(tasks[indexPath.row].objectId).jpg")
         cell.textLabel?.text = tasks[indexPath.row].diaryTitle
         return cell
     }

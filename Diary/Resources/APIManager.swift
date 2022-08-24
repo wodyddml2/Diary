@@ -16,7 +16,7 @@ class RequestAPIManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print("JSON: \(json)")
+//                print("JSON: \(json)")
                 
                 let imageList = json["results"].arrayValue.map {
                     $0["urls"]["regular"].stringValue

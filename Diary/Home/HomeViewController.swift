@@ -51,13 +51,14 @@ class HomeViewController: BaseViewController {
         navigationItem.backButtonTitle = " "
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonClicked))
-        
+        var sortedButton: UIBarButtonItem
         if #available(iOS 14.0, *) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "정렬", primaryAction: nil, menu: sortedMenuAction())
+            sortedButton = UIBarButtonItem(title: "정렬", primaryAction: nil, menu: sortedMenuAction())
         } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortedAlertAction))
+            sortedButton = UIBarButtonItem(title: "정렬", style: .plain, target: self, action: #selector(sortedAlertAction))
         }
-        
+        let backupButton = UIBarButtonItem(title: "백업/복구", style: .plain, target: self, action: #selector(backupButtonClicked))
+        navigationItem.leftBarButtonItems = [sortedButton,backupButton]
 
     }
     
@@ -70,6 +71,11 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchRealm()
+    }
+    
+    @objc func backupButtonClicked() {
+        let vc = BackupViewController()
+        transition(vc, transitionStyle: .push)
     }
     
     // MARK: Navigation LeftBarItem ===========================

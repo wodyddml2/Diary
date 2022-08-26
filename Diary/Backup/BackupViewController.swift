@@ -137,6 +137,11 @@ extension BackupViewController: UIDocumentPickerDelegate {
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+//        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//        let vc = HomeViewController()
+        
         guard let selectedFileURL = urls.first else {
             showAlertMessage(title: "선택하신 파일을 찾을 수 없습니다.")
             return
@@ -158,6 +163,8 @@ extension BackupViewController: UIDocumentPickerDelegate {
                     }, fileOutputHandler: { unzippedFile in
                         print("unZippedFile: \(unzippedFile)")
                         self.showAlertMessage(title: "복구 완료~")
+//                        sceneDelegate?.window?.rootViewController = vc
+//                        sceneDelegate?.window?.makeKeyAndVisible()
                     })
                     // 앱을 껏다 켜야 복구가 된 것을 볼 수 있는데 해결하기 위해 window rootView를 바꿔줌
                 } catch {

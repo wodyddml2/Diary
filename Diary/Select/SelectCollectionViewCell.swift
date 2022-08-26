@@ -1,6 +1,6 @@
 import UIKit
 
-class SelectCollectionViewCell: BaseCollectionViewCell {
+final class SelectCollectionViewCell: BaseCollectionViewCell {
     let splashImageView: UIImageView = {
         let view = UIImageView()
         return view

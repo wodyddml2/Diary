@@ -1,6 +1,6 @@
 import UIKit
 
-class SelectView: BaseView {
+final class SelectView: BaseView {
     let splashSearchBar: UISearchBar = {
         let view = UISearchBar()
         

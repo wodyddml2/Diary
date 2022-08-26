@@ -1,9 +1,8 @@
 import UIKit
 
-class HomeTableViewCell: BaseTableViewCell {
+final class HomeTableViewCell: BaseTableViewCell {
     let diaryTitleLabel: UILabel = {
        let view = UILabel()
-//        view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 22)
         return view
     }()

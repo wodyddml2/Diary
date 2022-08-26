@@ -4,9 +4,9 @@ import PhotosUI
 import RealmSwift
 import Kingfisher
 
-extension Notification.Name {
-    static let splashImage = NSNotification.Name("splashImageNotification")
-}
+//extension Notification.Name {
+//    static let splashImage = NSNotification.Name("splashImageNotification")
+//}
 
 protocol SelectImageDelegate {
     func sendImageData(image:UIImage)
@@ -15,15 +15,7 @@ protocol SelectImageDelegate {
 class MainViewController: BaseViewController {
     var mainView = MainView()
     
-    let config = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
-        if oldSchemaVersion < 1 {
-            migration.enumerateObjects(ofType: UserDairy.className()) { oldObject, newObject in
-                
-                newObject!["diaryWriteDate"] = "\(oldObject!["diaryWriteDate"] ?? Date())"
-            }
-        }
-    }
-    lazy var localRealm = try! Realm(configuration: config) // realm 테이블에 데이터를 CRUD할 때, realm 테이블 경로에 접근
+    let repository = UserDairyRepository()
     
     lazy var imagePicker: UIImagePickerController = {
         let view = UIImagePickerController()
@@ -113,12 +105,20 @@ class MainViewController: BaseViewController {
             let alert = UIAlertController(title: "내용을 저장하시겠습니까?", message: nil, preferredStyle: .alert)
             
             let ok = UIAlertAction(title: "저장", style: .default) { _ in
-                let task = UserDairy(diaryTitle: self.mainView.firstTextField.text ?? "" , diaryContent: self.mainView.mainTextView.text, diaryWriteDate: self.mainView.secondTextField.text ?? "", diaryRegisterDate: Date(), diaryImage: nil)
+                
+                let task = UserDairy(
+                    diaryTitle: self.mainView.firstTextField.text ?? "" ,
+                    diaryContent: self.mainView.mainTextView.text,
+                    diaryWriteDate: self.mainView.secondTextField.text ?? "",
+                    diaryRegisterDate: Date(),
+                    diaryImage: nil)
                 // => Record 추가
                 
                 do {
-                    try! self.localRealm.write {
-                        self.localRealm.add(task) // create
+                    
+                    try! self.repository.localRealm.write {
+                        self.repository.localRealm.add(task) // create
+                    
                     }
                 } catch let error {
                     print(error)

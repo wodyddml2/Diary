@@ -1,9 +1,12 @@
 import UIKit
 
 import SnapKit
+import Zip
+
 
 class BackupViewController: BaseViewController {
 
+    
     lazy var tableView: UITableView = {
        let view = UITableView()
         view.delegate = self
@@ -12,15 +15,35 @@ class BackupViewController: BaseViewController {
         return view
     }()
     
+    var backupList: [String] = []
+    var backupFileSize: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        // 메인스레드에서 시간 지연
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//
+//        }
+        
+        fetchZipFile()
+    }
+    func fetchZipFile() {
+        fetchDocumentZipFile { list, size in
+            self.backupList = list
+            guard let size = size else {
+                return
+            }
+            self.backupFileSize = size.map { fileSize in
+                String(format: "%.1f", fileSize / 1000)
+            }
+        }
+      
     }
     
     override func configureUI() {
         view.addSubview(tableView)
+        tableView.rowHeight = 60
         
         let backupButton = UIBarButtonItem(title: "백업", style: .plain, target: self, action: #selector(backupButtonClicked))
         let recoveryButton = UIBarButtonItem(title: "복구", style: .plain, target: self, action: #selector(recoveryButtonClicked))
@@ -35,27 +58,133 @@ class BackupViewController: BaseViewController {
     }
     
     @objc private func backupButtonClicked() {
+        let currentTime = Date()
         
+        var urlPaths = [URL]()
+        
+        // 도큐먼트 위치에 백업할 파일이 있는지 확인
+        guard let path = documentDirectoryPath(), let imageFile = ImageDirectoryPath() else {
+            showAlertMessage(title: "Document 위치에 오류가 있습니다.")
+            return
+        }
+      
+        // realmFile 경로 가져오기
+        let realmFile = path.appendingPathComponent("default.realm") // realm file이 없을 수 있음
+        
+        // realm 파일이 있는지 없는지 확인
+        guard FileManager.default.fileExists(atPath: realmFile.path), FileManager.default.fileExists(atPath: imageFile.path) else {
+            showAlertMessage(title: "백업할 파일이 없습니다.")
+            return
+        }
+        // 파일의 url 배열에 담아준다.
+        urlPaths.append(contentsOf: [realmFile, imageFile])
+        // 백업 파일 압축: URL
+        do {
+            let zipFilePath = try Zip.quickZipFiles(urlPaths, fileName: "Diary_\(currentTime)")
+            print("Archive Location\(zipFilePath)")
+            showActivityViewController(date: currentTime)
+            fetchZipFile()
+            tableView.reloadData()
+        } catch {
+            showAlertMessage(title: "압축 실패!!")
+        }
+        
+        
+        
+    }
+    // ActivityViewController
+    func showActivityViewController(date: Date) {
+        guard let path = documentDirectoryPath() else {
+            showAlertMessage(title: "도큐먼트 위치에 오류가 있습니다.")
+            return
+        }
+        // zipFile 경로 가져오기
+        let backupFileURL = path.appendingPathComponent("Diary_\(date).zip")
+        
+        let vc = UIActivityViewController(activityItems: [backupFileURL], applicationActivities: [])
+        self.present(vc, animated: true)
     }
     
     @objc private func recoveryButtonClicked() {
-        
+        // 파일 앱 불러오기
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.archive], asCopy: true)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false // document에 여러 파일을 가져오지 못하게 false 해줌
+        self.present(documentPicker, animated: true)
     }
 
 }
 
 extension BackupViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+      
+        return backupList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BackupTableViewCell.reusableIdentifier) as? BackupTableViewCell else {
             return UITableViewCell()
         }
-        
+        cell.fileNameLabel.text = backupList[indexPath.row]
+        cell.fileSizeLabel.text = "\(backupFileSize[indexPath.row])KB"
         return cell
     }
+}
+
+extension BackupViewController: UIDocumentPickerDelegate {
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print(#function)
+    }
     
-    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedFileURL = urls.first else {
+            showAlertMessage(title: "선택하신 파일을 찾을 수 없습니다.")
+            return
+        }
+        guard let path = documentDirectoryPath() else {
+            showAlertMessage(title: "도큐먼트 위치에 오류가 있습니다.")
+            return
+        }
+        // lastPathComponent는 파일이름과 확장자를 가져온다.
+        // 압축파일의 경로를 가져온다.
+        let sandBoxFileURL = path.appendingPathComponent(selectedFileURL.lastPathComponent)
+        if backupList.contains(sandBoxFileURL.lastPathComponent) {
+            if FileManager.default.fileExists(atPath: sandBoxFileURL.path) {
+                let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent) // 폴더 생성, 폴더 안에 파일 저장 공부 - 이미지들같은 경우
+                
+                do {
+                    try Zip.unzipFile(fileURL, destination: path, overwrite: true, password: nil, progress: { progress in
+                        print("progress: \(progress)")
+                    }, fileOutputHandler: { unzippedFile in
+                        print("unZippedFile: \(unzippedFile)")
+                        self.showAlertMessage(title: "복구 완료~")
+                    })
+                    // 앱을 껏다 켜야 복구가 된 것을 볼 수 있는데 해결하기 위해 window rootView를 바꿔줌
+                } catch {
+                    showAlertMessage(title: "압축 해제에 실패했습니다.")
+                }
+            } else {
+                do {
+                    // 파일 앱의 zip -> 도큐먼트 폴더에 복사
+                    try FileManager.default.copyItem(at: selectedFileURL, to: sandBoxFileURL)
+                    
+                    let fileURL = path.appendingPathComponent(sandBoxFileURL.lastPathComponent)
+                    
+                    try Zip.unzipFile(fileURL, destination: path, overwrite: true, password: nil, progress: { progress in
+                        print("progress: \(progress)")
+                    }, fileOutputHandler: { unzippedFile in
+                        print("unZippedFile: \(unzippedFile)")
+                        self.showAlertMessage(title: "복구 완료~")
+                    })
+                    
+                } catch {
+                    showAlertMessage(title: "압축 해제에 실패했습니다.")
+                }
+            }
+        } else {
+            showAlertMessage(title: "선택한 파일은 복구할 수 없습니다.")
+        }
+        
+        
+    }
 }

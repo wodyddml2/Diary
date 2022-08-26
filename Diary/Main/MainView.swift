@@ -1,6 +1,6 @@
 import UIKit
-
-class MainView: BaseView {
+// 상속을 할 필요가 없는 클래스에는 final을 붙이면 된다.
+final class MainView: BaseView {
     let mainImageView: UIImageView = {
         let view = UIImageView()
         view.layer.borderColor = UIColor.black.cgColor

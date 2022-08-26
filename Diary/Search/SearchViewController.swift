@@ -22,14 +22,20 @@ class SearchViewController: BaseViewController {
   override func viewDidLoad() {
         super.viewDidLoad()
 
-      diaryTitleList = repository.fetch().map({
-            $0.diaryTitle
-        })
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        diaryTitleList = repository.fetch().map({
+              $0.diaryTitle
+          })
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchController.isActive = false
+    }
     override func configureUI() {
         tableView.rowHeight = 100
-        
+       
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.scopeButtonTitles = ["s","검색"]
@@ -78,5 +84,4 @@ extension SearchViewController: UISearchResultsUpdating {
      
         tableView.reloadData()
     }
-    
 }

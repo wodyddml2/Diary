@@ -58,6 +58,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         repository.fetch().forEach {
             if $0.diaryTitle == filterList?[indexPath.row] {
                 cell.diaryDateLabel.text = $0.diaryWriteDate
+                cell.diaryImageView.image = loadImageFromDocument(fileName: "\($0.objectId).jpg")
             }
         }
             

@@ -28,8 +28,8 @@ class TabViewController: UITabBarController {
         
         let thirdVC = SettingViewController()
         thirdVC.tabBarItem.title = "Setting"
-        thirdVC.tabBarItem.image = UIImage(systemName: "house")
-        thirdVC.tabBarItem.selectedImage = UIImage(systemName: "house.fill")
+        thirdVC.tabBarItem.image = UIImage(systemName: "gearshape")
+        thirdVC.tabBarItem.selectedImage = UIImage(systemName: "gearshape.fill")
 //        let thirdNav = UINavigationController(rootViewController: thirdVC)
         
         setViewControllers([firstNav, secondNav, thirdVC], animated: true)

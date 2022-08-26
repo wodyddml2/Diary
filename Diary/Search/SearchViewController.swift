@@ -3,6 +3,23 @@ import UIKit
 import SnapKit
 import RealmSwift
 
+enum SearchBarScope: Int {
+    case first
+    case second
+    case third
+    
+    var result: String {
+        switch self {
+        case .first:
+            return "일기"
+        case .second:
+            return "과제"
+        case .third:
+            return "애플"
+        }
+    }
+}
+
 class SearchViewController: BaseViewController {
 
     private lazy var tableView: UITableView = {
@@ -13,6 +30,8 @@ class SearchViewController: BaseViewController {
         return view
     }()
     let searchController = UISearchController(searchResultsController: nil)
+    
+    
     
     let repository = UserDairyRepository()
   
@@ -36,10 +55,13 @@ class SearchViewController: BaseViewController {
     override func configureUI() {
         tableView.rowHeight = 100
        
+        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.scopeButtonTitles = ["s","검색"]
+        searchController.searchBar.scopeButtonTitles = [SearchBarScope.first.result,SearchBarScope.second.result,SearchBarScope.third.result]
+        
         navigationItem.searchController = searchController
+        navigationItem.title = "Search"
         searchController.view.addSubview(tableView)
         
     }
@@ -74,7 +96,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension SearchViewController: UISearchResultsUpdating {
+extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text?.lowercased() else {return}
   
@@ -83,5 +105,14 @@ extension SearchViewController: UISearchResultsUpdating {
         })
      
         tableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        switch selectedScope {
+        case SearchBarScope.first.rawValue: searchBar.text = SearchBarScope.first.result
+        case SearchBarScope.second.rawValue: searchBar.text = SearchBarScope.second.result
+        case SearchBarScope.third.rawValue: searchBar.text = SearchBarScope.third.result
+        default: searchBar.text = ""
+        }
     }
 }

@@ -1,25 +1,41 @@
 import UIKit
 
+import SnapKit
+import RealmSwift
+
 class SearchViewController: BaseViewController {
 
     private lazy var tableView: UITableView = {
        let view = UITableView()
         view.delegate = self
         view.dataSource = self
-        view.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.reusableIdentifier)
+        view.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reusableIdentifier)
         return view
     }()
     let searchController = UISearchController(searchResultsController: nil)
     
-    override func viewDidLoad() {
+    let repository = UserDairyRepository()
+  
+    var diaryTitleList: [String]?
+    var filterList: [String]?
+    
+  override func viewDidLoad() {
         super.viewDidLoad()
 
+      diaryTitleList = repository.fetch().map({
+            $0.diaryTitle
+        })
     }
     
     override func configureUI() {
+        tableView.rowHeight = 100
         
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.scopeButtonTitles = ["s","검색"]
         navigationItem.searchController = searchController
         searchController.view.addSubview(tableView)
+        
     }
 
     override func setConstraint() {
@@ -32,14 +48,34 @@ class SearchViewController: BaseViewController {
 }
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return filterList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reusableIdentifier, for: indexPath) as? SearchTableViewCell else {return UITableViewCell()}
-        cell.label.text = "Sss"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reusableIdentifier, for: indexPath) as? HomeTableViewCell else {return UITableViewCell()}
+
+        cell.diaryTitleLabel.text = filterList?[indexPath.row]
+        repository.fetch().forEach {
+            if $0.diaryTitle == filterList?[indexPath.row] {
+                cell.diaryDateLabel.text = $0.diaryWriteDate
+            }
+        }
+            
+        
+        
         return cell
     }
-    
+}
+
+extension SearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else {return}
+  
+        filterList = diaryTitleList?.filter({
+            $0.lowercased().contains(text)
+        })
+     
+        tableView.reloadData()
+    }
     
 }

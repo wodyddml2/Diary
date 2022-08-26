@@ -1,6 +1,6 @@
 import UIKit
 
-final class HomeTableViewCell: BaseTableViewCell {
+class HomeTableViewCell: BaseTableViewCell {
     let diaryTitleLabel: UILabel = {
        let view = UILabel()
         view.font = .boldSystemFont(ofSize: 22)

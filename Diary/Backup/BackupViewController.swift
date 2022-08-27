@@ -138,9 +138,9 @@ extension BackupViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         
-//        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//        let vc = HomeViewController()
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let vc = HomeViewController()
         
         guard let selectedFileURL = urls.first else {
             showAlertMessage(title: "선택하신 파일을 찾을 수 없습니다.")
@@ -163,8 +163,8 @@ extension BackupViewController: UIDocumentPickerDelegate {
                     }, fileOutputHandler: { unzippedFile in
                         print("unZippedFile: \(unzippedFile)")
                         self.showAlertMessage(title: "복구 완료~")
-//                        sceneDelegate?.window?.rootViewController = vc
-//                        sceneDelegate?.window?.makeKeyAndVisible()
+                        sceneDelegate?.window?.rootViewController = vc
+                        sceneDelegate?.window?.makeKeyAndVisible()
                     })
                     // 앱을 껏다 켜야 복구가 된 것을 볼 수 있는데 해결하기 위해 window rootView를 바꿔줌
                 } catch {
@@ -195,3 +195,6 @@ extension BackupViewController: UIDocumentPickerDelegate {
         
     }
 }
+// json으로 데이터를 만들어서 백/복이 깔끔 마이그레이션 걱정 덜한다. 좀 더 적합 json을 default.realm에 추가하고 scenedelegate로 root뷰를 바꾸는 것으로 가능
+// 복구 위치를 바꿔준다. 그 후 기존 렘을 없애주고 그 위치에 다시 넣어준다. 비추
+// 기존의 렘데이터가 남아있어서 문제가 생긴다. sceneDelegate는 

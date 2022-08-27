@@ -41,10 +41,17 @@ final class MainView: BaseView {
     }
     override func configureUI() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGesture))
+        // 제스처는 하나의 뷰에만 사용할 수 있다!! 아니면 제스처를 여러개로 만들어 등록해야함.
+        // 제스처가 실행이 안되는 경우에는 userInteractionEnabled를 true로 설정
         self.addGestureRecognizer(tapGesture)
         [mainImageView, firstTextField, secondTextField, mainTextView].forEach {
             self.addSubview($0)
         }
+        // hittest 이벤트를 클릭했을 때 어디로 처리가되는지 알 수 있음
+        
+        // Locale
+        // Locale.current.languageCode, Locale.current.regionCode는 디바이스에서 한국어 미국이면 그대로 뜬다.
+        // 복잡...
     }
     
     override func setConstraints() {

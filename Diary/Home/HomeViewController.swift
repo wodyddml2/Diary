@@ -13,6 +13,13 @@ class HomeViewController: BaseViewController {
        let view = FSCalendar()
         view.delegate = self
         view.dataSource = self
+        view.appearance.headerDateFormat = "YYYY년 MM월"
+        view.appearance.headerTitleColor = .darkGray
+        view.appearance.weekdayTextColor = .red
+        view.layer.borderWidth = 3
+        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 10
         view.backgroundColor = .white
         return view
     }()
@@ -83,7 +90,11 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchRealm()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY MM dd"
+        let str = formatter.string(from: Date())
+        let date = formatter.date(from: str)
+        tasks = repository.fetchDate(date: date ?? Date())
     }
     
     @objc func backupButtonClicked() {
@@ -196,6 +207,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "List"
+    }
+    
 }
 
 extension HomeViewController : FSCalendarDelegate, FSCalendarDataSource {
@@ -213,7 +228,8 @@ extension HomeViewController : FSCalendarDelegate, FSCalendarDataSource {
 //    }
     // date: yyyyMMdd hh:mm:ss => dateFormatter
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-        return formatter.string(from: date) == "220907" ? "오프라인 모임" : nil
+//        return formatter.string(from: date) == "220907" ? "오프라인 모임" : nil
+        return "\(tasks.count)"
     }
     // 100개중 -> 25일 3개 -> 3개만 cell
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {

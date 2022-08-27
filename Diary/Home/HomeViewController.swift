@@ -13,6 +13,7 @@ class HomeViewController: BaseViewController {
        let view = FSCalendar()
         view.delegate = self
         view.dataSource = self
+        view.register(FSCalendarCell.self, forCellReuseIdentifier: FSCalendarCell.reusableIdentifier)
         view.appearance.headerDateFormat = "YYYY년 MM월"
         view.appearance.headerTitleColor = .darkGray
         view.appearance.weekdayTextColor = .red
@@ -214,22 +215,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController : FSCalendarDelegate, FSCalendarDataSource {
-    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return repository.fetchDate(date: date).count
-    }
+//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+//        return repository.fetchDate(date: date).count
+//    }
 //    func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {
 //        return "SeSAC"
 //    }
 //    func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
 //        return UIImage(systemName: "star")
 //    }
-//    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
-//        <#code#>
-//    }
-    // date: yyyyMMdd hh:mm:ss => dateFormatter
+    
+    
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-//        return formatter.string(from: date) == "220907" ? "오프라인 모임" : nil
-        return "\(tasks.count)"
+    
+        let diaryCount = repository.fetchDate(date: date).count
+        
+        return diaryCount == 0 ? nil : "-\(diaryCount)-"
+
     }
     // 100개중 -> 25일 3개 -> 3개만 cell
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
